@@ -1,0 +1,27 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+string s, t;
+
+vector<int> prefix_function(string s) {
+    int n = s.size();
+    vector<int> pi(n);
+    for(int i = 1; i < n; i++) {
+        int j = pi[i-1];
+        while(j > 0 && s[i] != s[j]) j = pi[j-1];
+        if(s[i] == s[j]) j++;
+        pi[i] = j;
+    }
+    return pi;
+}
+
+int main() {
+    cin >> s;
+    cin >> t;
+    vector<int> pi = prefix_function(s + "#" + t);
+    int res = 0;
+    for(int i : pi) {
+        if(i == s.size()) res++;
+    }
+    cout << res;
+}
